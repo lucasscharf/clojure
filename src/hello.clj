@@ -5,13 +5,13 @@
 (println (concat [1,2] [3,4] [23] [666]))
 (println (/ 22 7))
 (println (/ 22.0 7))
-(println (class (/ 22.0 7)))
-(println (class (/ 22 7)))
+;(println (. class (/ 22.0 7)))
+;(println (. class (/ 22 7)))
 (println)
-(println (class 22))
-(println (class 22.0))
-(println (class 22N))
-(println (class 22M))
+;(println (class 22))
+;(println (class 22.0))
+;(println (class 22N))
+;(println (class 22M))
 ; O maior valor de long é 9223372036854775807
 (println (class 9223372036854775808))
 
@@ -35,6 +35,7 @@
 (namorar "Dona Flor" "Vadinho" "Deodoro" "Peguete 1" "Peguete 2")
 (namorar "Dona Flor" "Vadinho" "Deodoro" "Peguete 1")
 (namorar "Dona Flor" "Vadinho" "Deodoro")
+
 
 (def bar 10)
 (println bar)

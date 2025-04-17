@@ -1,3 +1,5 @@
+//TODO colocar clojure.spec
+//vals
 # Considerações gerais
 Notação prefixada: (println "Hello world!")
 
@@ -343,6 +345,9 @@ Pega o n-ésimo elemento de uma coleção suscetivamente.
 ## mod
 `(mod a b)` operador módulo. Equivalente à (a%b) em Java.
 
+## quot
+`(quot a b)` operador quociente. Também chamado de divisão inteira. O arredondamento é para o inteiro mais próximo.
+
 ## apply
 `(apply f args)`
 
@@ -387,6 +392,9 @@ Predicados são um conjunto de funções que retornam `true` ou `false`. Por con
 
 # re-seq
 `(re-seq regexp string)` retorna uma sequência de strings que satisfazem as condições da expressão regular passada em `regexp`.
+
+# slupr
+`(slurp f & opts)` abre um leitor (`clojure.java.io/reader`) `f` e lê todo o conteúdo retornando como uma string. 
 
 # Estruturas de controle
 
