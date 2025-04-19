@@ -1,5 +1,3 @@
-//TODO colocar clojure.spec
-//vals
 # Considerações gerais
 Notação prefixada: (println "Hello world!")
 
@@ -373,6 +371,10 @@ As funções de ordenamento `sort` e `sort-by` possuem assinaturas semelhantes: 
 
 ## doall/dorun
 `(doall coll)` e `(dorun coll)` força a avaliação/execução de uma sequência preguicosa. A diferença é que o `durun`não armazena os elementos em memória. Dessa forma, o `dorun` pode ser utilizado para avaliar sequências muito grandes.
+
+## keys e vals
+`(keys mapa)` e `(vals mapa)` manipulam as chaves e valores de um mapa. `vals`retorna uma sequência ordenada dos valores em um mapa e o `keys`faz o mesmo para as chaves. Utiliza o mesmo ordenamento que `(seq map)`.
+
 
 # predicados
 Predicados são um conjunto de funções que retornam `true` ou `false`. Por convenção terminam com um ponto de interrogação. 
