@@ -1,4 +1,5 @@
 (require '[clojure.string :as str])
+(require '[clojure.spec.alpha :as s])
 
 (println "Hello world!")
 (println "What is this:" (+ 1 2))
@@ -57,7 +58,6 @@
 (println (str "A" "B" "C" "..." "D"))
 
 
-
 (defn parentetizar [s palavra]
   (if (empty? palavra)
     s
@@ -82,3 +82,26 @@
 (println (first "Hello"))
 (println (rest "Hello"))
 (println (cons \H "ello"))
+
+
+(s/def ::even even?)
+(s/valid? ::even 4)
+;; => true
+(s/valid? ::even 5)
+;; => false
+
+(s/def ::username string?)
+(s/def ::usernames (s/coll-of ::username))
+(s/valid? ::usernames ["alice" "bob" "carol"])
+;; => true
+(s/valid? ::usernames ["alice" 123])
+;; => false
+
+(def uuid-regex #"(?i)^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$")
+(s/def ::uuid-string
+  (s/and string? #(re-matches uuid-regex %)))
+(s/def ::uuid-string (s/and string? #(re-matches uuid-regex %)))
+
+
+(s/valid? ::uuid-string "a06baf1e-3d77-49b4-8279-bceb5cd74ecd")
+(s/valid? ::uuid-string "invalid-uuid-string")   

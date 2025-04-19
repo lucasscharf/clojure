@@ -521,3 +521,39 @@ Para importar pacotes java, utiliza-se a seguinte sintaxe: `(import [& lista-de-
 
 # Metadata
 Dados sobre dados. Para ler os metadados, utiliza-se o form `(meta #'form)` onde `form` é o elemento que queremos ler os metadados. Para adicionar as informações sobre dados, utiliza-se o form `^metada form`.
+
+# clojure.spec
+`clojure.spec` é uma biblioteca para validações de dados. Serve para definir a estrutura e comportamento dos dados de forma declarativa. Permite validar os dados conforme especificações, transformar dados, gerar dados de testes, instrumentar funções para verificar a corretude dos testes. Ele permite fazer composições de espeficifações. O import do pacote é: `(require '[clojure.spec.alpha :as s])`. Todos os exemplos aqui usam esse import.
+
+## s/def
+`(def k spec-form)` dado uma `keyword` ou símbolo `k` e um `spec`, `spec-name`, predicado, ou `regex-op` faz o mapeamento de `k`para o `spec`. A nulidade `nil` remove a entrada para o registro `k`.
+
+Serve pare definir uma estrutura.
+
+```clojure
+(s/def ::even even?)
+(s/valid? ::even 4)
+;; => true
+(s/valid? ::even 5)  
+;; => false
+
+(s/def ::username string?)
+(s/def ::usernames (s/coll-of ::username))
+(s/valid? ::usernames ["alice" "bob" "carol"])
+;; => true
+(s/valid? ::usernames ["alice" 123])
+;; => false
+
+(def uuid-regex #"(?i)^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$")
+(s/def ::uuid-string
+  (s/and string? #(re-matches uuid-regex %)))
+(s/def ::uuid-string (s/and string? #(re-matches uuid-regex %)))
+
+(s/valid? ::uuid-string "a06baf1e-3d77-49b4-8279-bceb5cd74ecd")
+;; => true
+(s/valid? ::uuid-string "invalid-uuid-string")
+;; => false
+```
+
+## s/valid? 
+`(s/valid? spec x)` o predicado retorna true se `x` for válido para o `spec` definido.
