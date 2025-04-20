@@ -213,6 +213,24 @@ A função `(clojure.repl/doc f)` permite ver a documentação (estilo JavaDoc) 
 
 O operador `&` permite agrupar parâmetros dentro de uma coleção numa chamada de função. Funciona como o operador `...` em Java. 
 
+A macro `#`permite a criação de funções anônimas para serem utilizadas dentro de outras funções. As seguintes funções são equivalentes e produzem uma sequência de caracteres em caixa alta:
+
+```clojure
+(defn upper-case-manual [s]
+  (.toUpperCase s))
+
+(let [vetor ["a", "b", "c"]]
+  (map upper-case-manual vetor))
+
+(let [vetor ["a", "b", "c"]]
+  (map #(.toUpperCase %) vetor)
+  )
+
+(let [vetor ["a", "b", "c"]]
+  (map (fn [x] (.toUpperCase x)) vetor)
+)
+```
+
 ## concat
 Concatena coleções
 
@@ -349,9 +367,16 @@ Pega o n-ésimo elemento de uma coleção suscetivamente.
 ## apply
 `(apply f args)`
 
-A função `apply` "abre" uma coleção e passa os seus elementos como argumentos individuais para a função `f`.
+A função `apply` "abre" uma coleção e passa os seus elementos como argumentos "individuais" (ou em conjunto, de acordo com a função `f`) para a função `f`.
+Funciona como uma espécie de acumulador. Caso o objeto seja aplicar uma função dentro dos elementos de uma sequência gerando uma nova sequência, olhar a função `map`.
 
 ```clojure
+(apply + [1 2 3 4 5])
+-> 15
+
+(apply + 10 [1 2 3])
+-> 16
+
 > (println (str (interleave "Attack at midnight" "The purple elephant chortled")))
 clojure.lang.LazySeq@d4ea9f36
 
@@ -375,6 +400,16 @@ As funções de ordenamento `sort` e `sort-by` possuem assinaturas semelhantes: 
 ## keys e vals
 `(keys mapa)` e `(vals mapa)` manipulam as chaves e valores de um mapa. `vals`retorna uma sequência ordenada dos valores em um mapa e o `keys`faz o mesmo para as chaves. Utiliza o mesmo ordenamento que `(seq map)`.
 
+## re-matcher e re-seq
+`(re-matcher regexp string)` e `(re-seq regex string)` manipulam strings e expressões regulares. `re-matcher` não é estilo clojure. `re-seq` retorna uma sequência imutável de strings que satisfazem a expressão regular. Essa sequência pode ser manipulada por meio de operações de sequência.
+
+```clojure
+(re-seq #"\w+" "the quick brown fox") 
+-> ("the" "quick" "brown" "fox")
+
+(map #(.toUpperCase %) (re-seq #"\w+" "the quick brown fox"))
+-> ("THE" "QUICK" "BROWN" "FOX")
+```
 
 # predicados
 Predicados são um conjunto de funções que retornam `true` ou `false`. Por convenção terminam com um ponto de interrogação. 

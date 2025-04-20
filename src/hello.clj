@@ -105,3 +105,27 @@
 
 (s/valid? ::uuid-string "a06baf1e-3d77-49b4-8279-bceb5cd74ecd")
 (s/valid? ::uuid-string "invalid-uuid-string")   
+
+(re-seq #"\w+" "the quick brown fox") 
+
+(map #(.toUpperCase %) (re-seq #"\w+" "the quick brown fox"))
+
+
+
+(defn upper-case-manual [s]
+  (.toUpperCase s))
+
+(let [vetor ["a", "b", "c"]]
+  (map upper-case-manual vetor))
+
+(let [vetor ["a", "b", "c"]]
+  (map #(.toUpperCase %) vetor)
+  )
+
+(let [vetor ["a", "b", "c"]]
+  (map (fn [x] (.toUpperCase x)) vetor)
+)
+
+(apply + [1 2 3 4 5])
+
+(apply + 10 [1 2 3])	
