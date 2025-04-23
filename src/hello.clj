@@ -1,5 +1,6 @@
 (require '[clojure.string :as str])
 (require '[clojure.spec.alpha :as s])
+(import '(java.io File))
 
 (println "Hello world!")
 (println "What is this:" (+ 1 2))
@@ -129,3 +130,6 @@
 (apply + [1 2 3 4 5])
 
 (apply + 10 [1 2 3])	
+
+
+(seq (.listFiles (File. ".")))

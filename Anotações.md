@@ -411,6 +411,12 @@ As funções de ordenamento `sort` e `sort-by` possuem assinaturas semelhantes: 
 -> ("THE" "QUICK" "BROWN" "FOX")
 ```
 
+## re-seq
+`(re-seq regexp string)` retorna uma sequência de strings que satisfazem as condições da expressão regular passada em `regexp`.
+
+## slupr
+`(slurp f & opts)` abre um leitor (`clojure.java.io/reader`) `f` e lê todo o conteúdo retornando como uma string.
+
 # predicados
 Predicados são um conjunto de funções que retornam `true` ou `false`. Por convenção terminam com um ponto de interrogação. 
 
@@ -426,12 +432,6 @@ Predicados são um conjunto de funções que retornam `true` ou `false`. Por con
 `some?` retorna `true` se alguma avaliação retornar `true`.
 `not-every?` retorna `true` se alguma avaliação retornar `false`.
 `not-any?` retorna `true` se todas as avaliações retornarem `false`.
-
-# re-seq
-`(re-seq regexp string)` retorna uma sequência de strings que satisfazem as condições da expressão regular passada em `regexp`.
-
-# slupr
-`(slurp f & opts)` abre um leitor (`clojure.java.io/reader`) `f` e lê todo o conteúdo retornando como uma string. 
 
 # Estruturas de controle
 
