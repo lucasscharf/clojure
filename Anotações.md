@@ -358,6 +358,86 @@ Pega o n-ésimo elemento de uma coleção suscetivamente.
 -> (0 1 2 0 1 2 0 1 2 0)
 ```
 
+
+## assoc
+`(assoc map key val)`, `(assoc map key val & kvs)` e `(assoc vec index replacement)` `ASSOC`ia chaves e valores em um determinado mapa. Em outras palavras, cria um novo novo mapa que contem `map` e o par `key` e `val` adicionado. Quando aplicado a um vetor, cria um novo vetor com o elemento adicionado (`assoc` não funciona com lista).
+
+```clojure
+(assoc {} :key1 "value" :key2 "another value")
+;;=> {:key2 "another value", :key1 "value"}
+
+(assoc {:key1 "old value1" :key2 "value2"} 
+        :key1 "value1" :key3 "value3")
+;;=> {:key3 "value3", :key2 "value2", :key1 "value1"}
+
+;; Nil é tratado como um mapa vazio
+(assoc nil :key1 4)
+;;=> {:key1 4}
+
+;; 'assoc' usado com vetor (mas não com lista): 
+(assoc [1 2 3] 0 10)     ;;=> [10 2 3]
+(assoc [1 2 3] 2 '(4 6)) ;;=> [1 2 (4 6)]
+;; Se 0 < index <= n, então será feito substituição do elemento no vetor
+(assoc [1 2 3] 3 10)     ;;=> [1 2 3 10]
+;; Se index > n, então temos exception
+(assoc [1 2 3] 4 10)
+;; java.lang.IndexOutOfBoundsException (NO_SOURCE_FILE:0)
+```
+
+## dissoc
+`(dissoc map key)` e `(dissoc map key & ks)` Dezassocia as chaves de um mapa removendo-as do mapeamento. 
+
+## select-keys
+`(select-keys map keyseq)` retorna um novo mapa contendo apenas as entradas do mapa presentes em `keyseq`.
+
+```clojure
+(select-keys {:a 1 :b 2} [:a])
+;;=> {:a 1}
+
+(select-keys {:a 1 :b 2} [:a :c])
+;;=> {:a 1}
+
+(select-keys {:a 1 :b 2 :c 3} [:a :c])
+;;=> {:c 3, :a 1}
+```
+
+## merge  e merge-with
+`(merge & maps)` combina mapas, se diferentes mapas contém a mesma chave, será usado o valor do mapa mais à direita.
+
+```clojure
+(merge {:a 1 :b 2 :c 3} {:b 9 :d 4})
+;;=> {:d 4, :a 1, :b 9, :c 3}
+
+(merge {:a 1} nil)   
+;=> {:a 1}
+
+(merge nil {:a 1})   
+;=> {:a 1}
+
+(merge nil nil)      
+;=> nil
+```
+
+`(merge-with f & maps)` permite definir uma função `f` de agregação para os elementos do mapa.
+
+```clojure
+;;combinando os elementos com a operação de soma
+(merge-with + 
+            {:a 1  :b 2}
+            {:a 9  :b 98 :c 0})
+;;=> {:c 0, :a 10, :b 100}
+
+```
+
+## union, intersection, difference e 
+Operações de conjuntos. Fazem as oeprações de união, intersecção e diferença entre conjuntos.
+
+
+
+# selection
+seleção entre conjuntos.
+
+
 ## mod
 `(mod a b)` operador módulo. Equivalente à (a%b) em Java.
 
